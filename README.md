@@ -1,5 +1,10 @@
 # Symfony 6 with CMS Routing
 
+## To reproduce the problem
+
+1. install the project on your local.
+2. try to run `bin/console d:m:diff` (you will see the error reported on [this issue](https://github.com/symfony-cmf/routing-bundle/issues/477)).
+
 ## Install (for OSx)
 
 1. Install PHP
