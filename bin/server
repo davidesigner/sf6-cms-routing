@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+__DIR__="$(
+  cd "$(dirname "${0}")"
+  echo $(pwd)
+)"
+
+. ${__DIR__}/util/functions.sh
+
+ACTION=$1
+
+if [ -z "$ACTION" ]; then
+  error "Please provide ${GREEN}start${DEFAULT}, ${RED}stop${DEFAULT} or ${YELLOW}status${DEFAULT} argument."
+fi
+
+if [ "$ACTION" != "start" ] && [ "$ACTION" != "stop" ] && [ "$ACTION" != "status" ]; then
+  error "Only ${GREEN}start${DEFAULT}, ${RED}stop${DEFAULT} and ${YELLOW}status${DEFAULT} arguments available."
+fi
+
+if [ "$ACTION" = "start" ]; then
+  symfony server:start -d
+  docker-compose up -d
+  symfony open:local
+fi
+
+if [ "$ACTION" = "stop" ]; then
+  symfony server:stop
+  docker-compose down --remove-orphans
+fi
+
+if [ "$ACTION" = "status" ]; then
+  symfony server:status
+  docker-compose ps
+fi
